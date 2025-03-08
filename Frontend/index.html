@@ -1,13 +1,57 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite + React</title>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.jsx"></script>
-  </body>
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="stylesheet" href="src/index.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="refresh" content="3"> <!-- Automatischer Reload der Seite -->
+  <title>Eat Up - Find your recipe</title>
+</head>
+
+<body>
+  <header>
+    <h1> 🍽️ Eat Up</h1>
+    <p>The app that helps you to reduce food waste</p>
+    <input type="text" placeholder="🔍 Search" class="search">
+    <button class="login-btn">Log In</button>
+    <button class="login-btn">Sign Up</button>
+  </header>
+
+  <main>
+    <section class="finder">
+      <h2>The decider what to eat today</h2>
+      <p>What is in your cupboard?</p>
+      <input type="text" placeholder="Insert ingredients">
+      <p>upload a picture of your ingredients</p>
+      <input type="image">
+      <button>Filter by type</button>
+      <button>Inspire me - One recipe</button>
+      <button class="find-recipe">Find recipe</button>
+    </section>
+
+    <section class="recipes">
+      <!-- Rezept 1 -->
+      <article>
+        <img src="recipe1.jpg" alt="Easy Tuna Casserole">
+        <h3>Easy Tuna Casserole</h3>
+        <p>⏳ 20 Mins | Level: Easy</p>
+        <button>View recipe</button>
+      </article>
+
+      <!-- Rezept 2 -->
+      <article>
+        <img src="recipe2.jpg" alt="Other Casserole">
+        <h3>Other Casserole</h3>
+        <p>⏳ 20 Mins | Level: Easy</p>
+        <button>View recipe</button>
+      </article>
+
+    </section>
+  </main>
+
+  <div id="root"></div>
+  <script src="script.js"></script>
+</body>
+
 </html>
