@@ -1,13 +1,12 @@
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
+
 const recipeSchema = new mongoose.Schema({
     name: { type: String, required: true },
-    ingredients: { type: [String], required: true },
+    ingredients: [{ type: String, required: true }], // Array of ingredients
     instructions: { type: String, required: true },
-    preparationTime: { type: Number, required: true }, // In minutes
+    preparationTime: { type: Number, required: true }, // Time in minutes
     servings: { type: Number, required: true },
-    createdAt: { type: Date, default: Date.now },
-  });
-  
-  // Create and export the Recipe model
-  const Recipe = mongoose.model('Recipe', recipeSchema);
-  export default Recipe;
+    owner: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true } // ✅ Link to User
+}, { timestamps: true });
+
+export default mongoose.model("Recipe", recipeSchema);

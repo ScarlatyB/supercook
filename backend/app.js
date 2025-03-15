@@ -12,9 +12,21 @@ import Preference from "./models/Preferences.js";
 import Checkbox from "./models/CheckBox-Allergies.js";
 import Image from "./models/Image.js";
 import Recipe from "./models/Recipes.js";
+import User from "./models/users.js";
+import bcrypt from "bcrypt";
+import userRoutes from "./routes/users.js";
+import preferenceRoutes from "./routes/Preferences.js";
+import checkBoxRoutes from "./routes/CheckBox.js";
+import RecipeRout from "./routes/Recipes.js";
+import imageRout from "./routes/Image.js";
+import { get } from "http";
+
 mongoose.connect("mongodb+srv://supercook:supercook@cluster0.hbnvm.mongodb.net/Informations").then(() => {
     console.log("connected");
-    // Image Endpoint
+app.use("/api", userRoutes);
+app.use("/api", preferenceRoutes);
+    
+        // Image Endpoint
 // Set up multer storage configuration (where to store the uploaded file)
 const storage = multer.memoryStorage(); // Use memory storage to keep the image in memory (you can also save it to disk)
 const upload = multer({ storage: storage });
@@ -44,8 +56,7 @@ app.post('/upload-image', upload.single('image'), async (req, res) => {
     res.status(500).json({ message: 'Error uploading image' });
   }
 });
-//GET
-      
+         //GET
 app.get('/get-image/:name', async (req, res) => {
     try {
       const imageName = req.params.name; // Extract image name from URL parameter
@@ -85,95 +96,13 @@ app.get('/get-image/:name', async (req, res) => {
       console.error('Error retrieving image:', error);
       res.status(500).json({ message: 'Error retrieving image' });
     }
-  });
-        
-    // Preferences Endpoint
-    //POST
-    app.post("/Preferences",async(req ,res) => {
-        const NewPreference = new Preference();
-        const PrefrencesBody = req.body.PrefBody;
-        NewPreference.body = PrefrencesBody;
-       await NewPreference.save();
-       
-        res.json(NewPreference)
-    });
-    //GET
-app.get("/Preferences",async(req,res) => {
-    const preferences2 = await Preference.find();
-    console.log("Here is The Preferences",preferences2);
-    res.json(preferences2);
-});
-//Check box(allergies) API ENDPOINT
+  });  
+  app.use("/api", imageRout);
+  //Check box(allergies) API ENDPOINT
 // Route to handle POST request with checkbox data
-app.post('/submit-checkbox', async (req, res) => {
-  try {
-    const { name, isChecked } = req.body;
-
-    if (!name || typeof isChecked !== 'boolean') {
-      return res.status(400).json({ error: 'Invalid input data' });
-    }
-
-    const newCheckbox = new Checkbox({ name, isChecked });
-
-    await newCheckbox.save();
-
-    res.status(200).json({ message: 'Checkbox data saved successfully' });
-  } catch (err) {
-    console.error('Error while saving checkbox:', err);
-    res.status(500).json({ error: 'Failed to save data', details: err.message });
-  }
-});
-// GET request to fetch all checkboxes
-app.get('/get-checkboxes', async (req, res) => {
-  try {
-    // Fetch all checkbox documents from the database
-    const checkboxes = await Checkbox.find(); // This will return an array of all checkbox entries
-
-   
-    res.status(200).json({ checkboxes });
-  } catch (err) {
-    console.error('Error while fetching checkboxes:', err);
-    res.status(500).json({ error: 'Failed to fetch data', details: err.message });
-  }
-});
+app.use("/api/checkboxes", checkBoxRoutes); 
 //Recipe API ENDPOINT
-app.post('/add-ai-recipe', async (req, res) => {
-  try {
-    
-    const { name, ingredients, instructions, preparationTime, servings } = req.body;
-
-    if (!name || !ingredients || !instructions || !preparationTime || !servings) {
-      return res.status(400).json({ error: 'All fields are required' });
-    }
-
-    // Create a new Recipe instance with the AI-generated data
-    const newRecipe = new Recipe({
-      name,
-      ingredients,
-      instructions,
-      preparationTime,
-      servings,
-    });
-
-    // Save the recipe to the database
-    await newRecipe.save();
-    res.status(200).json({ message: 'AI-generated recipe added successfully', recipe: newRecipe });
-  } catch (err) {
-    console.error('Error adding recipe:', err);
-    res.status(500).json({ error: 'Failed to add recipe', details: err.message });
-  }
-});
-
-// GET endpoint to fetch all recipes
-app.get('/recipes', async (req, res) => {
-  try {
-    const recipes = await Recipe.find();
-    res.status(200).json({ recipes });
-  } catch (err) {
-    console.error('Error fetching recipes:', err);
-    res.status(500).json({ error: 'Failed to fetch recipes', details: err.message });
-  }
-});
+app.use("/api/recipes", RecipeRout);
 // Start the Express server
 
 });

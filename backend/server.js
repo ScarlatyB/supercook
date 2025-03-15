@@ -1,6 +1,6 @@
-const express = require('express');
-const mongoose = require('mongoose');
-const dotenv = require('dotenv');
+import express from "express";
+import mongoose from "mongoose";
+import dotenv from "dotenv";
 
 dotenv.config();
 const app = express();
@@ -21,6 +21,6 @@ app.get('/', (req, res) => {
 res.send('Welcome to the backend! 🚀');
 });
 
-app.listen(PORT, () => {
+app.listen(PORT, () => { 
 console.log(`Server running on port ${PORT}`);
 });
