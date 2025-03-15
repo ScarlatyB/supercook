@@ -35,7 +35,7 @@ router.post("/preferences", async (req, res) => {
 // ✅ Get preferences with user details (Using `populate`)
 router.get("/preferences", async (req, res) => {
     try {
-        const preferences = await Preference.find().populate("owner", "name email"); // 🔗 Fetch user data
+        const preferences = await Preference.find().populate("owner", "name "); // 🔗 Fetch user data
         res.status(200).json(preferences);
     } catch (error) {
         console.error("Error retrieving preferences:", error);
