@@ -1,28 +1,33 @@
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="src/index.css">
-    <title>Sign Up</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="src/index.css">
+  <title>Sign Up</title>
 </head>
+
 <body>
 
-    <header>
-        <div class="logo-container">
-          <h1 class="main-title"> 🍽️ Eat Up</h1>
-          <p class="subtitle">The app that helps you to reduce food waste</p>
-        </div>
-      </header>
-
-    <div class="auth-container">
-        <h2>Create an Account</h2>
-        <input type="text" id="name" placeholder="Full Name">
-        <input type="email" id="email" placeholder="Email">
-        <input type="password" id="password" placeholder="Password">
-        <button onclick="signup()">Sign Up</button>
-        <p>Already have an account? <a href="login.html">Login here</a></p>
+  <header>
+    <div class="logo-container">
+      <h1 class="main-title"> 🍽️ Eat Up</h1>
+      <p class="subtitle">The app that helps you to reduce food waste</p>
     </div>
+  </header>
 
-    <!-- <script src="auth.js"></script> -->
+  <div class="auth-container">
+    <h2>Create an Account</h2>
+    <form action="" method="post">
+      <input type="text" id="name" placeholder="Full Name">
+      <input type="email" id="email" placeholder="Email">
+      <input type="password" id="password" placeholder="Password">
+    </form>
+    <button onclick="signup()">Sign Up</button>
+    <p>Already have an account? <a href="login.html">Login here</a></p>
+  </div>
+
+  <script src="users.js"></script>
 </body>
+
 </html>
