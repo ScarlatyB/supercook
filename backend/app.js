@@ -22,22 +22,6 @@ import imageRout from "./routes/Image.js";
 import { get } from "http";
 
 mongoose.connect("mongodb+srv://supercook:supercook@cluster0.hbnvm.mongodb.net/Informations").then(() => {
-    console.log("connected");
-    //API END POINT Preference
-app.use("/api", userRoutes);
-app.use("/api", preferenceRoutes); 
-  //Image End poit
-  app.use("/api", imageRout);
-  //Check box(allergies) API ENDPOINT
-// Route to handle POST request with checkbox data
-app.use("/api/checkboxes", checkBoxRoutes); 
-//Recipe API ENDPOINT
-app.use("/api/recipes", RecipeRout);
-// Start the Express server
-
-});
-app.listen("3000",() =>{
-    console.log("hii")
   console.log("connected");
   // Image Endpoint
   // Set up multer storage configuration (where to store the uploaded file)
