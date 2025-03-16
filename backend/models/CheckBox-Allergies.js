@@ -1,7 +1,8 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
 const checkboxSchema = new mongoose.Schema({
     name: { type: String, required: true },
-    isChecked: { type: Boolean, required: true }
+    isChecked: { type: Boolean, required: true },
+    owner: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true }
   });
   const Checkbox = mongoose.model('Checkbox', checkboxSchema);
-  module.exports = Checkbox;
+export default Checkbox;

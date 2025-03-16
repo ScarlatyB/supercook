@@ -1,9 +1,6 @@
-const mongoose = require("mongoose");
-const Schema = mongoose.Schema
-
-const PreferencesSchema = new Schema({
-    body : String
+import mongoose from "mongoose";
+const preferenceSchema = new mongoose.Schema({
+    body: { type: String, required: true },
+    owner: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true } // 🔗 Reference to User
 });
-
-const Preference = mongoose.model("Preferences",PreferencesSchema);
-module.exports = Preference;
+export default mongoose.model("Preference", preferenceSchema);
