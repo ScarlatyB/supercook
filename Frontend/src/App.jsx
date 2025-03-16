@@ -1,57 +1,51 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import React, { useState, useEffect } from "react";
+import "./App.css";
 
 function App() {
-   const [count, setCount] = useState(0)
+    const [recipes, setRecipes] = useState([]);
+    const [searchText, setSearchText] = useState("");
 
-  return (
-   <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-   </>
-   )
+    // ✅ Fetch recipes from the backend API
+    useEffect(() => {
+        fetch("http://localhost:3000/api/recipes")  // Adjust if needed
+            .then((response) => response.json())
+            .then((data) => {
+                console.log("Fetched recipes:", data);
+                setRecipes(data);
+            })
+            .catch((error) => console.error("Error fetching recipes:", error));
+    }, []);
+
+    return (
+        <div className="app">
+            <h1>SuperCook - Recipe List</h1>
+
+            {/* ✅ Search Input */}
+            <input 
+                type="text" 
+                className="search" 
+                placeholder="Search for a recipe..." 
+                value={searchText} 
+                onChange={(e) => setSearchText(e.target.value.toLowerCase())} 
+            />
+
+            {/* ✅ Display Recipes from Database */}
+            <div className="recipes">
+                {recipes.length > 0 ? (
+                    recipes
+                        .filter(recipe => recipe.title.toLowerCase().includes(searchText))
+                        .map(recipe => (
+                            <article key={recipe._id}>
+                                <h3>{recipe.title}</h3>
+                                <p>{recipe.description}</p>
+                            </article>
+                        ))
+                ) : (
+                    <p>Loading recipes...</p>  // ✅ Show loading message
+                )}
+            </div>
+        </div>
+    );
 }
 
- export default App
-
-// script.js
-
-document.addEventListener("DOMContentLoaded", () => {
-  const searchInput = document.querySelector(".search");
-  const recipeCards = document.querySelectorAll(".recipes article");
-  const findRecipeBtn = document.querySelector(".find-recipe");
-  
-  // Search Functionality
-  searchInput.addEventListener("input", (e) => {
-      const searchText = e.target.value.toLowerCase();
-      recipeCards.forEach(card => {
-          const title = card.querySelector("h3").innerText.toLowerCase();
-          card.style.display = title.includes(searchText) ? "block" : "none";
-      });
-  });
-  
-  // Find Recipe Button Click Event
-  findRecipeBtn.addEventListener("click", () => {
-      alert("Finding the best recipe for you...");
-  });
-});
+export default App;

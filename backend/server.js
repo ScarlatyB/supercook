@@ -10,14 +10,17 @@ const PORT = process.env.PORT || 3000;
 
 // Connect to MongoDB
 
-module.exports = async () => {
+const connectDB = async () => {
     try {
         await mongoose.connect(process.env.MONGO_URI, {});
         console.log("CONNECTED TO DATABASE SUCCESSFULLY");
     } catch (error) {
-        console.error('COULD NOT CONNECT TO DATABASE:', error.message);
+        console.error("COULD NOT CONNECT TO DATABASE:", error.message);
     }
 };
+
+connectDB(); // Call the function to connect to MongoDB
+
 
 // Initial route
 app.get('/', (req, res) => {
