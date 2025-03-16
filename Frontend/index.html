@@ -1,13 +1,114 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite + React</title>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.jsx"></script>
-  </body>
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="src/index.css">
+  <script src="src/App.jsx"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="refresh" content="3"> <!-- Automatischer Reload der Seite -->
+  <title>Eat Up - Find your recipe</title>
+</head>
+
+<body>
+  <header>
+    <div class="logo-container">
+      <h1 class="main-title"> 🍽️ Eat Up</h1>
+      <p class="subtitle">The app that helps you to reduce food waste</p>
+    </div>
+    <div class="header-right">
+      <input type="text" placeholder="🔍 Search..." class="search">
+      <button class="login-btn" onclick="window.location.href='login.html'">Log In</button>
+      <button class="signup-btn" onclick="window.location.href='signup.html'">Sign Up</button>
+    </div>
+  </header>
+
+  <main>
+    <section class="finder">
+      <h2>The decider what to eat today</h2>
+      <p>What is in your cupboard?</p>
+      <input type="text" placeholder="Insert ingredients">
+      <p>upload a picture of your ingredients</p>
+      <form id="upload" action="/action_page.php">
+        <input type="file" id="myFile" name="filename">
+      </form>
+      <!-- <button id="upload" type="image" img src="https://www.svgrepo.com/show/348096/cloud-upload.svg"></button> -->
+      <!-- TODO: Grösse anpassen, aber wie -->
+      <button>Filter by type</button>
+      <button>Inspire me - One recipe</button>
+      <button class="find-recipe">Find recipe</button>
+    </section>
+
+    <section class="recipes">
+      <!-- Rezept 1 -->
+      <article>
+        <img
+          src="https://www.allrecipes.com/thmb/_dv0J9QbS_yxqENuUloWlcXq2lc=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/18871_Easy-Tuna-Casserole_Melissa-Goff_4560684_original-1x1-1-49c5b69b74b041f5b44b58e1ec9fbfd8.jpg"
+          alt="Easy Tuna Casserole">
+        <h3>Easy Tuna Casserole</h3>
+        <p>⏳ 20 Mins | Level: Easy</p>
+        <button>View recipe</button>
+      </article>
+
+      <!-- Rezept 2 -->
+      <article>
+        <img
+          src="https://www.allrecipes.com/thmb/sCQS2DuqlgZ5r5hqTwm7hB-lagk=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/231808_GrandmasGroundBeefCasserole_MFS-WD1-a0626af0a5d9468985d12f83d40800f2.jpg"
+          alt="Other Casserole">
+        <h3>Other Casserole</h3>
+        <p>⏳ 20 Mins | Level: Easy</p>
+        <button>View recipe</button>
+      </article>
+
+      <!-- Rezept 3 -->
+      <article>
+        <img
+          src="https://www.allrecipes.com/thmb/_dv0J9QbS_yxqENuUloWlcXq2lc=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/18871_Easy-Tuna-Casserole_Melissa-Goff_4560684_original-1x1-1-49c5b69b74b041f5b44b58e1ec9fbfd8.jpg"
+          alt="Easy Tuna Casserole">
+        <h3>Easy Tuna Casserole</h3>
+        <p>⏳ 20 Mins | Level: Easy</p>
+        <button>View recipe</button>
+      </article>
+
+      <!-- Rezept 4 -->
+      <article>
+        <img
+          src="https://www.allrecipes.com/thmb/sCQS2DuqlgZ5r5hqTwm7hB-lagk=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/231808_GrandmasGroundBeefCasserole_MFS-WD1-a0626af0a5d9468985d12f83d40800f2.jpg"
+          alt="Other Casserole">
+        <h3>Other Casserole</h3>
+        <p>⏳ 20 Mins | Level: Easy</p>
+        <button>View recipe</button>
+      </article>
+
+      <!-- Rezept 5 -->
+      <article>
+        <img
+          src="https://www.allrecipes.com/thmb/_dv0J9QbS_yxqENuUloWlcXq2lc=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/18871_Easy-Tuna-Casserole_Melissa-Goff_4560684_original-1x1-1-49c5b69b74b041f5b44b58e1ec9fbfd8.jpg"
+          alt="Easy Tuna Casserole">
+        <h3>Easy Tuna Casserole</h3>
+        <p>⏳ 20 Mins | Level: Easy</p>
+        <button>View recipe</button>
+      </article>
+
+      <!-- Rezept 6 -->
+      <article>
+        <img
+          src="https://www.allrecipes.com/thmb/sCQS2DuqlgZ5r5hqTwm7hB-lagk=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/231808_GrandmasGroundBeefCasserole_MFS-WD1-a0626af0a5d9468985d12f83d40800f2.jpg"
+          alt="Other Casserole">
+        <h3>Other Casserole</h3>
+        <p>⏳ 20 Mins | Level: Easy</p>
+        <button>View recipe</button>
+      </article>
+
+    </section>
+  </main>
+
+  <div id="root"></div>
+  <script src="script.js"></script>
+</body>
+
 </html>
