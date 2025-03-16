@@ -9,12 +9,15 @@ app.use(express.json());
 const PORT = process.env.PORT || 3000;
 
 // Connect to MongoDB
-mongoose.connect(process.env.MONGO_URI, {
-useNewUrlParser: true,
-useUnifiedTopology: true
-})
-.then(() => console.log('✅ MongoDB connected'))
-.catch(err => console.error('❌ Failed to connect to MongoDB:', err));
+
+module.exports = async () => {
+    try {
+        await mongoose.connect(process.env.MONGO_URI, {});
+        console.log("CONNECTED TO DATABASE SUCCESSFULLY");
+    } catch (error) {
+        console.error('COULD NOT CONNECT TO DATABASE:', error.message);
+    }
+};
 
 // Initial route
 app.get('/', (req, res) => {
