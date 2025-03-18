@@ -9,7 +9,7 @@ function App() {
     const [uploading, setUploading] = useState(false);
     const [recipeResult, setRecipeResult] = useState(null);
 
-    //  Fetch recipes from backend
+    // Fetch recipes from backend
     useEffect(() => {
         fetch("http://localhost:3000/api/recipes")  // Updated API endpoint
             .then((response) => response.json())
@@ -41,7 +41,7 @@ function App() {
         setUploading(true);
 
         try {
-            //  Step 1: Upload the image
+            // Step 1: Upload the image
             const uploadResponse = await fetch("http://localhost:3000/upload-image", {
                 method: "POST",
                 body: formData
@@ -57,7 +57,7 @@ function App() {
             }
 
             //  Step 2: Fetch AI-generated recipe
-            console.log("📤 Fetching AI-generated recipe...");
+            console.log(" Fetching AI-generated recipe...");
             const recipeResponse = await fetch("http://localhost:3000/api/recipes");
             const recipeData = await recipeResponse.json();
 
@@ -72,9 +72,9 @@ function App() {
         setUploading(false);
     };
 
-    // Handle Recipe Search & Open New Window
+    //  Handle Recipe Search
     const handleFindRecipe = () => {
-        console.log(" Find Recipe button clicked!");
+        console.log("Find Recipe button clicked!");
 
         if (searchText.trim() === "") {
             alert("Please enter a recipe name.");
@@ -144,7 +144,7 @@ function App() {
                 </button>
             </div>
 
-            {/*  Display AI-Generated Recipe */}
+            {/* Display AI-Generated Recipe */}
             {recipeResult && (
                 <div className="recipe-result">
                     <h2>Generated Recipe</h2>
