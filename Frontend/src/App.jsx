@@ -9,7 +9,7 @@ function App() {
     const [uploading, setUploading] = useState(false);
     const [recipeResult, setRecipeResult] = useState(null);
 
-    //  Fetch recipes from backend
+    // Fetch recipes from backend
     useEffect(() => {
         fetch("http://localhost:3000/recipes")
             .then((response) => response.json())
@@ -41,7 +41,7 @@ function App() {
         setUploading(true);
 
         try {
-            // Step 1: Upload the image
+            // stepp 1: Upload the image
             const uploadResponse = await fetch("http://localhost:3000/upload-image", {
                 method: "POST",
                 body: formData
@@ -71,9 +71,9 @@ function App() {
         setUploading(false);
     };
 
-    // ✅ Handle Recipe Search
+    // Handle Recipe Search
     const handleFindRecipe = () => {
-        console.log(" Find Recipe button clicked!");
+        console.log("Find Recipe button clicked!");
 
         if (searchText.trim() === "") {
             setFilteredRecipes(recipes);
@@ -102,7 +102,7 @@ function App() {
                 <button onClick={handleFindRecipe}>Find Recipe</button> {/* ✅ Button now works */}
             </div>
 
-            {/*  Image Upload */}
+            {/* Image Upload */}
             <div className="upload-section">
                 <h2>Upload an Image of Your Ingredients</h2>
                 <input type="file" accept="image/*" onChange={handleFileChange} />
@@ -111,7 +111,7 @@ function App() {
                 </button>
             </div>
 
-            {/*  Display AI-Generated Recipe */}
+            {/* Display AI-Generated Recipe */}
             {recipeResult && (
                 <div className="recipe-result">
                     <h2>Generated Recipe</h2>
