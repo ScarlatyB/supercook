@@ -4,123 +4,140 @@ import "./App.css";
 function App() {
     const [recipes, setRecipes] = useState([]);
     const [searchText, setSearchText] = useState("");
+    const [filteredRecipes, setFilteredRecipes] = useState([]);
+    const [selectedFile, setSelectedFile] = useState(null);
+    const [uploading, setUploading] = useState(false);
+    const [recipeResult, setRecipeResult] = useState(null);
 
-    // ✅ Fetch recipes from the backend API
+    //  Fetch recipes from backend
     useEffect(() => {
-        fetch("http://localhost:3000/api/recipes")  // Adjust if needed
+        fetch("http://localhost:3000/recipes")
             .then((response) => response.json())
             .then((data) => {
                 console.log("Fetched recipes:", data);
-                setRecipes(data);
+                setRecipes(data.recipes);
+                setFilteredRecipes(data.recipes);
             })
             .catch((error) => console.error("Error fetching recipes:", error));
     }, []);
 
+    // Handle File Selection
+    const handleFileChange = (e) => {
+        setSelectedFile(e.target.files[0]);
+    };
+
+    //  Handle Image Upload & Fetch AI Recipe
+    const handleUpload = async () => {
+        console.log("✅ Upload button clicked!");
+        
+        if (!selectedFile) {
+            alert("Please select an image first.");
+            return;
+        }
+
+        const formData = new FormData();
+        formData.append("image", selectedFile);
+
+        setUploading(true);
+
+        try {
+            // Step 1: Upload the image
+            const uploadResponse = await fetch("http://localhost:3000/upload-image", {
+                method: "POST",
+                body: formData
+            });
+
+            const uploadData = await uploadResponse.json();
+            console.log("Upload Response:", uploadData);
+
+            if (!uploadResponse.ok) {
+                alert("Error uploading image: " + uploadData.message);
+                setUploading(false);
+                return;
+            }
+
+            // Step 2: Fetch AI-generated recipe
+            const recipeResponse = await fetch("http://localhost:3000/recipes");
+            const recipeData = await recipeResponse.json();
+
+            console.log("Fetched Recipe:", recipeData);
+            setRecipeResult(recipeData.recipes[0]);  // Show first recipe
+
+        } catch (error) {
+            console.error("Upload failed:", error);
+            alert("Failed to upload image.");
+        }
+
+        setUploading(false);
+    };
+
+    // ✅ Handle Recipe Search
+    const handleFindRecipe = () => {
+        console.log(" Find Recipe button clicked!");
+
+        if (searchText.trim() === "") {
+            setFilteredRecipes(recipes);
+            return;
+        }
+
+        const filtered = recipes.filter(recipe =>
+            recipe.name.toLowerCase().includes(searchText.toLowerCase())
+        );
+        setFilteredRecipes(filtered);
+    };
+
     return (
         <div className="app">
-            <h1>SuperCook - Recipe List</h1>
+            <h1>SuperCook - Recipe Finder</h1>
 
-            {/* ✅ Search Input */}
-            <input 
-                type="text" 
-                className="search" 
-                placeholder="Search for a recipe..." 
-                value={searchText} 
-                onChange={(e) => setSearchText(e.target.value.toLowerCase())} 
-            />
+            {/* Search Input */}
+            <div>
+                <input
+                    type="text"
+                    className="search"
+                    placeholder="Search for a recipe..."
+                    value={searchText}
+                    onChange={(e) => setSearchText(e.target.value)}
+                />
+                <button onClick={handleFindRecipe}>Find Recipe</button> {/* ✅ Button now works */}
+            </div>
 
-            {/* ✅ Display Recipes from Database */}
+            {/*  Image Upload */}
+            <div className="upload-section">
+                <h2>Upload an Image of Your Ingredients</h2>
+                <input type="file" accept="image/*" onChange={handleFileChange} />
+                <button onClick={handleUpload} disabled={uploading}>
+                    {uploading ? "Uploading..." : "Upload & Get Recipe"}
+                </button>
+            </div>
+
+            {/*  Display AI-Generated Recipe */}
+            {recipeResult && (
+                <div className="recipe-result">
+                    <h2>Generated Recipe</h2>
+                    <h3>{recipeResult.name}</h3>
+                    <p>{recipeResult.instructions}</p>
+                    <p><strong>Ingredients:</strong> {recipeResult.ingredients.join(", ")}</p>
+                    <p><strong>Preparation Time:</strong> {recipeResult.preparationTime} minutes</p>
+                    <p><strong>Servings:</strong> {recipeResult.servings}</p>
+                </div>
+            )}
+
+            {/* Recipe List */}
             <div className="recipes">
-                {recipes.length > 0 ? (
-                    recipes
-                        .filter(recipe => recipe.title.toLowerCase().includes(searchText))
-                        .map(recipe => (
-                            <article key={recipe._id}>
-                                <h3>{recipe.title}</h3>
-                                <p>{recipe.description}</p>
-                            </article>
-                        ))
+                {filteredRecipes.length > 0 ? (
+                    filteredRecipes.map(recipe => (
+                        <article key={recipe._id}>
+                            <h3>{recipe.name}</h3>
+                            <p>{recipe.instructions}</p>
+                        </article>
+                    ))
                 ) : (
-                    <p>Loading recipes...</p>  // ✅ Show loading message
+                    <p>No recipes found.</p>
                 )}
             </div>
         </div>
     );
 }
 
-<<<<<<< HEAD
 export default App;
-=======
-document.addEventListener("DOMContentLoaded", () => {
-    const searchInput = document.querySelector(".search");
-    const recipeCards = document.querySelectorAll(".recipes article");
-    const findRecipeBtn = document.querySelector(".find-recipe");
-    
-    // Search Functionality
-    searchInput.addEventListener("input", (e) => {
-        const searchText = e.target.value.toLowerCase();
-        recipeCards.forEach(card => {
-            const title = card.querySelector("h3").innerText.toLowerCase();
-            card.style.display = title.includes(searchText) ? "block" : "none";
-        });
-    });
-    
-    // Find Recipe Button Click Event
-    findRecipeBtn.addEventListener("click", () => {
-        alert("Finding the best recipe for you...");
-    });
-  });
-  
-  // Simulating a simple login/signup system using localStorage
-  
-  function signup() {
-      const name = document.getElementById("name").value;
-      const email = document.getElementById("email").value;
-      const password = document.getElementById("password").value;
-  
-      if (name && email && password) {
-          localStorage.setItem("user", JSON.stringify({ name, email, password }));
-          alert("Account created successfully! Redirecting to login.");
-          window.location.href = "login.html";
-      } else {
-          alert("Please fill out all fields.");
-      }
-  }
-  
-  function login() {
-      const email = document.getElementById("login-email").value;
-      const password = document.getElementById("login-password").value;
-      const user = JSON.parse(localStorage.getItem("user"));
-  
-      if (user && user.email === email && user.password === password) {
-          localStorage.setItem("loggedIn", "true");
-          alert("Login successful! Redirecting to homepage.");
-          window.location.href = "index.html";
-      } else {
-          alert("Invalid email or password.");
-      }
-  }
-  
-  // Check if user is logged in
-  document.addEventListener("DOMContentLoaded", function () {
-      const loggedIn = localStorage.getItem("loggedIn");
-  
-      if (loggedIn === "true") {
-          document.querySelector(".login-btn")?.remove();
-          document.querySelector(".signup-btn")?.remove();
-  
-          let accountBtn = document.createElement("button");
-          accountBtn.innerText = "My Account";
-          accountBtn.className = "account-btn";
-          accountBtn.onclick = function () {
-              alert("Welcome to your account!");
-          };
-  
-          document.querySelector(".header-right").appendChild(accountBtn);
-      }
-  });
-
- export default App
-
-// script.js
->>>>>>> origin/main
