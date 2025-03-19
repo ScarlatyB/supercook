@@ -1,0 +1,33 @@
+# Node.js
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+package-lock.json
+
+# Ambiente
+.env
+
+# Logs
+logs
+*.log
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# IDEs e Sistemas Operacionais
+.DS_Store
+Thumbs.db
+.vscode/
+
+# Arquivos de build
+dist/
+build/
+
+# Arquivos temporários
+tmp/
+temp/
+
+# JSON de autenticação do Google Cloud
+*.json
