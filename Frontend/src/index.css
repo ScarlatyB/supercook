@@ -118,7 +118,7 @@ button:hover {
   border-color: red;
   /* TODO: wieso funktioniert das nicht*/
   color: pink;
-  box-shadow: 0 0.5em -0.4em red;
+  box-shadow: 0 0.5em 0.4em red;
   transform: translateY(-0.25em);
   cursor: pointer;
 }
