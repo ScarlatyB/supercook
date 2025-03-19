@@ -74,7 +74,7 @@ function App() {
 
     //  Handle Recipe Search
     const handleFindRecipe = () => {
-        console.log("Find Recipe button clicked!");
+        console.log(" Find Recipe button clicked!");
 
         if (searchText.trim() === "") {
             alert("Please enter a recipe name.");
@@ -133,7 +133,7 @@ function App() {
                 <button onClick={handleFindRecipe}>Find Recipe</button> {/*  Button now works */}
             </div>
 
-            {/* Image Upload */}
+            {/*  Image Upload */}
             <div className="upload-section">
                 <h2>Upload an Image of Your Ingredients</h2>
                 <input type="file" accept="image/*" onChange={handleFileChange} />
@@ -142,7 +142,7 @@ function App() {
                 </button>
             </div>
 
-            {/* Display AI-Generated Recipe */}
+            {/*  Display AI-Generated Recipe */}
             {recipeResult && (
                 <div className="recipe-result">
                     <h2>Generated Recipe</h2>
@@ -170,5 +170,6 @@ function App() {
         </div>
     );
 }
+
 
 export default App;
