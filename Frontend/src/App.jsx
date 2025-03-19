@@ -28,7 +28,7 @@ function App() {
 
     //  Handle Image Upload & Fetch AI Recipe
     const handleUpload = async () => {
-        console.log("✅ Upload button clicked!");
+        console.log(" Upload button clicked!");
         
         if (!selectedFile) {
             alert("Please select an image first.");
@@ -73,9 +73,10 @@ function App() {
 
     // Handle Recipe Search
     const handleFindRecipe = () => {
-        console.log("Find Recipe button clicked!");
+        console.log(" Find Recipe button clicked!");
 
         if (searchText.trim() === "") {
+            alert("Please enter a recipe name.");
             setFilteredRecipes(recipes);
             return;
         }
@@ -84,13 +85,39 @@ function App() {
             recipe.name.toLowerCase().includes(searchText.toLowerCase())
         );
         setFilteredRecipes(filtered);
+
+        //  Open search results in a new window
+        const searchResultsHtml = `
+            <html>
+            <head>
+                <title>Recipe Search Results</title>
+                <style>
+                    body { font-family: Arial, sans-serif; padding: 20px; }
+                    .recipe { border: 1px solid #ccc; padding: 10px; margin: 10px 0; }
+                </style>
+            </head>
+            <body>
+                <h2>Search Results for: ${searchText}</h2>
+                ${filtered.length > 0 ? filtered.map(recipe => `
+                    <div class="recipe">
+                        <h3>${recipe.name}</h3>
+                        <p>${recipe.instructions}</p>
+                    </div>
+                `).join("") : "<p>No recipes found.</p>"}
+            </body>
+            </html>
+        `;
+
+        const newWindow = window.open("", "_blank"); //  Opens a new window
+        newWindow.document.write(searchResultsHtml);
+        newWindow.document.close();
     };
 
     return (
         <div className="app">
             <h1>SuperCook - Recipe Finder</h1>
 
-            {/* Search Input */}
+            {/*  Search Input */}
             <div>
                 <input
                     type="text"
@@ -98,11 +125,13 @@ function App() {
                     placeholder="Search for a recipe..."
                     value={searchText}
                     onChange={(e) => setSearchText(e.target.value)}
-                />
-                <button onClick={handleFindRecipe}>Find Recipe</button> {/* ✅ Button now works */}
-            </div>
+                    />
+                    <button className="find-recipe" onClick={() => handleFindRecipe()}>
+                        Find Recipe
+                    </button> 
+                </div>
 
-            {/* Image Upload */}
+            {/*  Image Upload */}
             <div className="upload-section">
                 <h2>Upload an Image of Your Ingredients</h2>
                 <input type="file" accept="image/*" onChange={handleFileChange} />
@@ -111,7 +140,7 @@ function App() {
                 </button>
             </div>
 
-            {/* Display AI-Generated Recipe */}
+            {/*  Display AI-Generated Recipe */}
             {recipeResult && (
                 <div className="recipe-result">
                     <h2>Generated Recipe</h2>
@@ -139,4 +168,6 @@ function App() {
         </div>
     );
 }
+
+
 export default App;
