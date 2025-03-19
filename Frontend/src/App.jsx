@@ -130,9 +130,7 @@ function App() {
                     value={searchText}
                     onChange={(e) => setSearchText(e.target.value)}
                 />
-                <button className="find-recipe" onClick={() => handleFindRecipe()}>
-                    Find Recipe
-                </button> {/* Now properly linked to the function */}
+                <button onClick={handleFindRecipe}>Find Recipe</button> {/*  Button now works */}
             </div>
 
             {/* Image Upload */}
