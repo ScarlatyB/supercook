@@ -3,10 +3,6 @@
 
 <head>
   <meta charset="UTF-8" />
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
-    rel="stylesheet">
   <link rel="stylesheet" href="src/index.css">
   <script src="src/App.jsx"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -14,6 +10,7 @@
   <title>Eat Up - Find your recipe</title>
 </head>
 
+<!-- Navigations-Bar mit Logo -->
 <body>
   <header>
     <div class="logo-container">
@@ -37,13 +34,12 @@
       <form id="upload" action="/action_page.php">
         <input type="file" id="myFile" name="filename">
       </form>
-      <!-- <button id="upload" type="image" img src="https://www.svgrepo.com/show/348096/cloud-upload.svg"></button> -->
-      <!-- TODO: Grösse anpassen, aber wie -->
       <button>Filter by type</button>
       <button>Inspire me - One recipe</button>
       <button class="find-recipe">Find recipe</button>
     </section>
 
+    <!-- Static recipes because recipes won't show on frontend. -->
     <section class="recipes" id="recipes-container">
       <!-- Rezept 1 -->
       <article>
@@ -105,13 +101,12 @@
         <button onclick="window.location.href='viewRecipe.html'">View recipe</button>
       </article>
       
-      <!-- <script src="src/Components/viewRecipes.js"></script> -->
+      <script src="src/Components/viewRecipes.js"></script>
 
     </section>
   </main>
 
   <div id="root"></div>
-  <script src="script.js"></script>
 </body>
 
 </html>
