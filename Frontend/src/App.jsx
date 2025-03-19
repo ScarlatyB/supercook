@@ -28,7 +28,7 @@ function App() {
 
     //  Handle Image Upload & Fetch AI Recipe
     const handleUpload = async () => {
-        console.log("✅ Upload button clicked!");
+        console.log(" Upload button clicked!");
         
         if (!selectedFile) {
             alert("Please select an image first.");
@@ -99,7 +99,7 @@ function App() {
                     value={searchText}
                     onChange={(e) => setSearchText(e.target.value)}
                 />
-                <button onClick={handleFindRecipe}>Find Recipe</button> {/* ✅ Button now works */}
+                <button onClick={handleFindRecipe}>Find Recipe</button> {/* Button should works */}
             </div>
 
             {/* Image Upload */}
@@ -139,4 +139,5 @@ function App() {
         </div>
     );
 }
+
 export default App;
