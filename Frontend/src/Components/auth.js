@@ -1,4 +1,7 @@
-// Simulating a simple login/signup system without using the database
+/**
+ * Simulating a simple signup system without using the database
+ * @selanssary
+ */
 
 function signup() {
     const name = document.getElementById("name").value;
@@ -14,6 +17,10 @@ function signup() {
     }
 }
 
+/**
+ * Simulating a simple login system without using the database
+ * @selanssary
+ */
 function login() {
     const email = document.getElementById("login-email").value;
     const password = document.getElementById("login-password").value;
