@@ -9,9 +9,9 @@ function App() {
     const [uploading, setUploading] = useState(false);
     const [recipeResult, setRecipeResult] = useState(null);
 
-    // Fetch recipes from backend
+    //  Fetch recipes from backend
     useEffect(() => {
-        fetch("http://localhost:3000/recipes")
+        fetch("http://localhost:3000/api/recipes")  // Updated API endpoint
             .then((response) => response.json())
             .then((data) => {
                 console.log("Fetched recipes:", data);
@@ -26,7 +26,7 @@ function App() {
         setSelectedFile(e.target.files[0]);
     };
 
-    //  Handle Image Upload & Fetch AI Recipe
+    // Handle Image Upload & Fetch AI Recipe
     const handleUpload = async () => {
         console.log(" Upload button clicked!");
         
@@ -41,14 +41,14 @@ function App() {
         setUploading(true);
 
         try {
-            // stepp 1: Upload the image
+            //  Step 1: Upload the image
             const uploadResponse = await fetch("http://localhost:3000/upload-image", {
                 method: "POST",
                 body: formData
             });
 
             const uploadData = await uploadResponse.json();
-            console.log("Upload Response:", uploadData);
+            console.log(" Upload Response:", uploadData);
 
             if (!uploadResponse.ok) {
                 alert("Error uploading image: " + uploadData.message);
@@ -56,22 +56,23 @@ function App() {
                 return;
             }
 
-            // Step 2: Fetch AI-generated recipe
-            const recipeResponse = await fetch("http://localhost:3000/recipes");
+            //  Step 2: Fetch AI-generated recipe
+            console.log("📤 Fetching AI-generated recipe...");
+            const recipeResponse = await fetch("http://localhost:3000/api/recipes");
             const recipeData = await recipeResponse.json();
 
-            console.log("Fetched Recipe:", recipeData);
-            setRecipeResult(recipeData.recipes[0]);  // Show first recipe
+            console.log(" Fetched Recipe:", recipeData);
+            setRecipeResult(recipeData.recipes[0]);  //  Show first recipe
 
         } catch (error) {
-            console.error("Upload failed:", error);
+            console.error(" Upload failed:", error);
             alert("Failed to upload image.");
         }
 
         setUploading(false);
     };
 
-    // Handle Recipe Search
+    // Handle Recipe Search & Open New Window
     const handleFindRecipe = () => {
         console.log(" Find Recipe button clicked!");
 
@@ -86,8 +87,14 @@ function App() {
         );
         setFilteredRecipes(filtered);
 
-        //  Open search results in a new window
-        const searchResultsHtml = `
+        // Open search results in a new window
+        let newWindow = window.open("", "_blank");
+        if (!newWindow) {
+            alert("Pop-up blocked! Allow pop-ups for this site.");
+            return;
+        }
+
+        newWindow.document.write(`
             <html>
             <head>
                 <title>Recipe Search Results</title>
@@ -106,10 +113,7 @@ function App() {
                 `).join("") : "<p>No recipes found.</p>"}
             </body>
             </html>
-        `;
-
-        const newWindow = window.open("", "_blank"); //  Opens a new window
-        newWindow.document.write(searchResultsHtml);
+        `);
         newWindow.document.close();
     };
 
@@ -125,13 +129,13 @@ function App() {
                     placeholder="Search for a recipe..."
                     value={searchText}
                     onChange={(e) => setSearchText(e.target.value)}
-                    />
-                    <button className="find-recipe" onClick={() => handleFindRecipe()}>
-                        Find Recipe
-                    </button> 
-                </div>
+                />
+                <button className="find-recipe" onClick={() => handleFindRecipe()}>
+                    Find Recipe
+                </button> {/* Now properly linked to the function */}
+            </div>
 
-            {/*  Image Upload */}
+            {/* Image Upload */}
             <div className="upload-section">
                 <h2>Upload an Image of Your Ingredients</h2>
                 <input type="file" accept="image/*" onChange={handleFileChange} />
@@ -152,7 +156,7 @@ function App() {
                 </div>
             )}
 
-            {/* Recipe List */}
+            {/*  Recipe List */}
             <div className="recipes">
                 {filteredRecipes.length > 0 ? (
                     filteredRecipes.map(recipe => (
@@ -168,6 +172,5 @@ function App() {
         </div>
     );
 }
-
 
 export default App;
